@@ -1,3 +1,11 @@
+<script setup lang="ts">
+  import { invoke } from "@tauri-apps/api/core";
+
+  async function greet() {
+    invoke("open_microsoft_login");
+  }
+</script>
+
 <template>
   <main>
     <div class="brand-logo">
@@ -6,7 +14,7 @@
       <p>Premium Launcher Experience</p>
     </div>
     <div class="actions">
-      <button class="primary">
+      <button class="primary" @click="greet">
         <img src="./assets/people.svg" alt="">
         <p>Login with Microsoft</p>
       </button>
