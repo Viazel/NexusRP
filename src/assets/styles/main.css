@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@theme {
+  --color-nexus-bg: #08080d;
+  --color-nexus-surface: #12121a;
+  --color-nexus-surface-hover: #1a1a26;
+  --color-nexus-border: rgba(255, 255, 255, 0.06);
+  --color-nexus-accent: #7c3aed;
+  --color-nexus-accent-light: #a78bfa;
+  --color-nexus-gold: #d4af37;
+  --color-nexus-neon: #00e5ff;
+  --font-display: "Segoe UI", system-ui, sans-serif;
+}
+
+/* Comportement application bureau */
+html,
+body,
+#app {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-display);
+  background: var(--color-nexus-bg);
+  color: #e8e8f0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+/* Scrollbar discrète */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.35);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 58, 237, 0.55);
+}
+
+/* Animations utilitaires */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.4), 0 0 40px rgba(0, 229, 255, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(124, 58, 237, 0.7), 0 0 60px rgba(0, 229, 255, 0.25);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Transitions Vue */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.slide-fade-enter-active {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-fade-leave-active {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-fade-enter-from {
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-16px);
+}
