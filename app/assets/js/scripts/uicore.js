@@ -11,6 +11,7 @@ const remote                         = require('@electron/remote')
 const isDev                          = require('./assets/js/isdev')
 const { LoggerUtil }                 = require('helios-core')
 const Lang                           = require('./assets/js/langloader')
+const UpdaterConfig                = require('./assets/js/updaterconstants')
 
 const loggerUICore             = LoggerUtil.getLogger('UICore')
 const loggerAutoUpdater        = LoggerUtil.getLogger('AutoUpdater')
@@ -46,12 +47,12 @@ if(!isDev){
                 break
             case 'update-available':
                 loggerAutoUpdater.info('New update available', info.version)
-                
+
                 if(process.platform === 'darwin'){
-                    info.darwindownload = `https://github.com/dscalzi/HeliosLauncher/releases/download/v${info.version}/Helios-Launcher-setup-${info.version}${process.arch === 'arm64' ? '-arm64' : '-x64'}.dmg`
-                    showUpdateUI(info)
+                    info.darwindownload = UpdaterConfig.getDarwinDmgUrl(info.version)
                 }
-                
+
+                showUpdateUI(info)
                 populateSettingsUpdateInformation(info)
                 break
             case 'update-downloaded':

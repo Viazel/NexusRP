@@ -79,7 +79,7 @@ jobs:
           PRODUCT=$(node -p "require('./package.json').productName")
           shopt -s nullglob
 
-          for f in dist/${PRODUCT}-setup-*.exe dist/${PRODUCT}-setup-*.dmg dist/${PRODUCT}-setup-*.AppImage; do
+          for f in dist/${PRODUCT}-setup-*.exe dist/${PRODUCT}-setup-*.dmg dist/${PRODUCT}-setup-*.zip dist/${PRODUCT}-setup-*.AppImage; do
             cp "$f" release-files/
           done
 

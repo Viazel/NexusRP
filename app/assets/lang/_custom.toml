@@ -4,15 +4,15 @@
 title = "NexusRP"
 
 [ejs.landing]
-mediaGitHubURL = "https://github.com/dscalzi/HeliosLauncher"
+mediaGitHubURL = "https://github.com/Viazel/NexusRP"
 mediaXURL = "#"
 mediaInstagramURL = "#"
 mediaYouTubeURL = "#"
 mediaDiscordURL = "https://discord.gg/zNWUXdt"
 
 [ejs.settings]
-sourceGithubLink = "https://github.com/dscalZi/HeliosLauncher"
-supportLink = "https://github.com/dscalZi/HeliosLauncher/issues"
+sourceGithubLink = "https://github.com/Viazel/NexusRP"
+supportLink = "https://github.com/Viazel/NexusRP/issues"
 
 [ejs.welcome]
 welcomeHeader = "BIENVENUE SUR NEXUSRP"
