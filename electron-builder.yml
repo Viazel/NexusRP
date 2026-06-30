@@ -49,3 +49,9 @@ linux:
 directories:
   buildResources: 'build'
   output: 'dist'
+
+# Génère latest.yml / latest-mac.yml / latest-linux.yml (sans publier via electron-builder)
+publish:
+  provider: github
+  owner: Viazel
+  repo: NexusRP

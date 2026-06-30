@@ -69,14 +69,49 @@ jobs:
       - name: Build installers
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+<<<<<<< HEAD
         run: npm run dist
         shell: bash
 
+=======
+        run: npm run dist -- --publish never
+        shell: bash
+
+      - name: Prepare release files
+        shell: bash
+        run: |
+          mkdir -p release-files
+          PRODUCT=$(node -p "require('./package.json').productName")
+          shopt -s nullglob
+
+          for f in dist/${PRODUCT}-setup-*.exe dist/${PRODUCT}-setup-*.dmg dist/${PRODUCT}-setup-*.AppImage; do
+            cp "$f" release-files/
+          done
+
+          for f in latest.yml latest-mac.yml latest-linux.yml; do
+            if [[ -f "dist/$f" ]]; then
+              cp "dist/$f" release-files/
+            fi
+          done
+
+          echo "Fichiers retenus pour la release :"
+          ls -la release-files/
+
+          if [[ -z "$(ls -A release-files)" ]]; then
+            echo "Aucun artefact de release trouvé dans dist/"
+            exit 1
+          fi
+
+>>>>>>> cc9a10b (fix(CD): don't push everything)
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dist-${{ matrix.os }}
+<<<<<<< HEAD
           path: dist/**
+=======
+          path: release-files/*
+>>>>>>> cc9a10b (fix(CD): don't push everything)
           if-no-files-found: error
 
   publish:
@@ -95,6 +130,15 @@ jobs:
           path: release-assets
           merge-multiple: true
 
+<<<<<<< HEAD
+=======
+      - name: List release assets
+        shell: bash
+        run: |
+          echo "Assets publiés sur GitHub :"
+          find release-assets -type f | sort
+
+>>>>>>> cc9a10b (fix(CD): don't push everything)
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
