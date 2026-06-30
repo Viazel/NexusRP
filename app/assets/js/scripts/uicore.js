@@ -38,6 +38,68 @@ webFrame.setVisualZoomLevelLimits(1, 1)
 
 // Initialize auto updates in production environments.
 let updateCheckListener
+const LauncherUpdate = {
+    state: 'idle',
+    info: null,
+    serverLaunchAllowed: false,
+    defaultLaunchLabel: null,
+
+    setState(state, info = null) {
+        this.state = state
+        this.info = info
+        this.apply()
+    },
+
+    setServerLaunchAllowed(val) {
+        this.serverLaunchAllowed = val
+        this.apply()
+    },
+
+    isLaunchBlocked() {
+        return this.state === 'required' || this.state === 'ready'
+    },
+
+    apply() {
+        const launchBtn = document.getElementById('launch_button')
+        const launchBtnText = document.getElementById('launch_button_text')
+        if(!launchBtn){
+            return
+        }
+
+        if(this.defaultLaunchLabel == null && launchBtnText){
+            this.defaultLaunchLabel = launchBtnText.textContent
+        }
+
+        if(this.isLaunchBlocked()){
+            launchBtn.disabled = false
+            launchBtn.classList.add('nexus-launch-update-required')
+            if(launchBtnText){
+                launchBtnText.textContent = this.state === 'ready'
+                    ? Lang.queryJS('landing.launch.installUpdateButton')
+                    : Lang.queryJS('landing.launch.updateRequiredButton')
+            }
+            return
+        }
+
+        launchBtn.classList.remove('nexus-launch-update-required')
+        if(launchBtnText && this.defaultLaunchLabel != null){
+            launchBtnText.textContent = this.defaultLaunchLabel
+        }
+        launchBtn.disabled = !this.serverLaunchAllowed
+    },
+
+    openUpdateFlow() {
+        if(this.state === 'ready' && !isDev){
+            ipcRenderer.send('autoUpdateAction', 'installUpdateNow')
+            return
+        }
+        switchView(getCurrentView(), VIEWS.settings, 350, 350, () => {
+            settingsNavItemListener(document.getElementById('settingsNavUpdate'), false)
+        })
+    }
+}
+window.LauncherUpdate = LauncherUpdate
+
 if(!isDev){
     ipcRenderer.on('autoUpdateNotification', (event, arg, info) => {
         switch(arg){
@@ -52,6 +114,7 @@ if(!isDev){
                     info.darwindownload = UpdaterConfig.getDarwinDmgUrl(info.version)
                 }
 
+                LauncherUpdate.setState('required', info)
                 showUpdateUI(info)
                 populateSettingsUpdateInformation(info)
                 break
@@ -62,10 +125,12 @@ if(!isDev){
                         ipcRenderer.send('autoUpdateAction', 'installUpdateNow')
                     }
                 })
+                LauncherUpdate.setState('ready', info)
                 showUpdateUI(info)
                 break
             case 'update-not-available':
                 loggerAutoUpdater.info('No new update found.')
+                LauncherUpdate.setState('idle')
                 settingsUpdateButtonStatus(Lang.queryJS('uicore.autoUpdate.checkForUpdatesButton'))
                 break
             case 'ready':

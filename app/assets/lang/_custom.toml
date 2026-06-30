@@ -29,3 +29,7 @@ cancelButton = "Annuler"
 [ejs.waiting]
 waitingText = "Connexion Microsoft..."
 waitingHint = "Une fenêtre va s'ouvrir pour vous authentifier."
+
+[js.landing.launch]
+updateRequiredButton = "Mettre à jour le launcher"
+installUpdateButton = "Installer la mise à jour"

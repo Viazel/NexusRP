@@ -122,7 +122,8 @@ function initSettingsValidators() {
 /**
  * Load configuration values onto the UI. This is an automated process.
  */
-async function initSettingsValues() {
+async function initSettingsValues(opts = {}) {
+    const { skipJavaValidation = false } = opts
     const sEls = document.getElementById('settingsContainer').querySelectorAll('[cValue]')
 
     for (const v of sEls) {
@@ -139,7 +140,9 @@ async function initSettingsValues() {
                     // Special Conditions
                     if (cVal === 'JavaExecutable') {
                         v.value = gFn.apply(null, gFnOpts)
-                        await populateJavaExecDetails(v.value)
+                        if(!skipJavaValidation){
+                            await populateJavaExecDetails(v.value)
+                        }
                     } else if (cVal === 'DataDirectory') {
                         v.value = gFn.apply(null, gFnOpts)
                     } else if (cVal === 'JVMOptions') {
@@ -1570,13 +1573,27 @@ function prepareUpdateTab(data = null) {
   * 
   * @param {boolean} first Whether or not it is the first load.
   */
-async function prepareSettings(first = false) {
+async function prepareSettings(first = false, opts = {}) {
+    const { deferHeavy = false } = opts
     if (first) {
         setupSettingsTabs()
         initSettingsValidators()
         prepareUpdateTab()
     } else {
         await prepareModsTab()
+    }
+    if (deferHeavy && first) {
+        prepareAccountsTab()
+        prepareAboutTab()
+        setTimeout(async () => {
+            await initSettingsValues({ skipJavaValidation: true })
+            await prepareJavaTab()
+            const javaExecInput = document.querySelector('#settingsContainer [cValue="JavaExecutable"]')
+            if(javaExecInput?.value){
+                await populateJavaExecDetails(javaExecInput.value)
+            }
+        }, 0)
+        return
     }
     await initSettingsValues()
     prepareAccountsTab()
