@@ -69,11 +69,6 @@ jobs:
       - name: Build installers
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-<<<<<<< HEAD
-        run: npm run dist
-        shell: bash
-
-=======
         run: npm run dist -- --publish never
         shell: bash
 
@@ -102,16 +97,11 @@ jobs:
             exit 1
           fi
 
->>>>>>> cc9a10b (fix(CD): don't push everything)
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dist-${{ matrix.os }}
-<<<<<<< HEAD
-          path: dist/**
-=======
           path: release-files/*
->>>>>>> cc9a10b (fix(CD): don't push everything)
           if-no-files-found: error
 
   publish:
@@ -130,15 +120,12 @@ jobs:
           path: release-assets
           merge-multiple: true
 
-<<<<<<< HEAD
-=======
       - name: List release assets
         shell: bash
         run: |
           echo "Assets publiés sur GitHub :"
           find release-assets -type f | sort
 
->>>>>>> cc9a10b (fix(CD): don't push everything)
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
