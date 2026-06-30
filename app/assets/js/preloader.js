@@ -4,7 +4,7 @@ const os             = require('os')
 const path           = require('path')
 
 const ConfigManager  = require('./configmanager')
-const { DistroAPI }  = require('./distromanager')
+const { DistroAPI, resolveNexusServer }  = require('./distromanager')
 const LangLoader     = require('./langloader')
 const { LoggerUtil } = require('helios-core')
 // eslint-disable-next-line no-unused-vars
@@ -31,13 +31,11 @@ LangLoader.setupLanguage()
  */
 function onDistroLoad(data){
     if(data != null){
-        
-        // Resolve the selected server if its value has yet to be set.
-        if(ConfigManager.getSelectedServer() == null || data.getServerById(ConfigManager.getSelectedServer()) == null){
-            logger.info('Determining default selected server..')
-            ConfigManager.setSelectedServer(data.getMainServer().rawServer.id)
-            ConfigManager.save()
-        }
+        // Toujours forcer le serveur unique nouvelle-terre.fr
+        const serv = resolveNexusServer(data)
+        logger.info(`Selected NexusRP server: ${serv.rawServer.id} (${serv.rawServer.address})`)
+        ConfigManager.setSelectedServer(serv.rawServer.id)
+        ConfigManager.save()
     }
     ipcRenderer.send('distributionIndexDone', data != null)
 }

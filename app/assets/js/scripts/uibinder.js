@@ -8,7 +8,7 @@ const { Type }      = require('helios-distribution-types')
 
 const AuthManager   = require('./assets/js/authmanager')
 const ConfigManager = require('./assets/js/configmanager')
-const { DistroAPI } = require('./assets/js/distromanager')
+const { DistroAPI, resolveNexusServer } = require('./assets/js/distromanager')
 
 let rscShouldLoad = false
 let fatalStartupError = false
@@ -65,7 +65,11 @@ async function showMainUI(data){
     }
 
     await prepareSettings(true)
-    updateSelectedServer(data.getServerById(ConfigManager.getSelectedServer()))
+    const distro = await DistroAPI.getDistribution()
+    const serv = resolveNexusServer(distro)
+    ConfigManager.setSelectedServer(serv.rawServer.id)
+    ConfigManager.save()
+    updateSelectedServer(serv)
     refreshServerStatus()
     setTimeout(() => {
         document.getElementById('frameBar').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
@@ -98,8 +102,10 @@ async function showMainUI(data){
 
         setTimeout(() => {
             $('#loadingContainer').fadeOut(500, () => {
-                $('#loadSpinnerImage').removeClass('rotating')
+                const ring = document.getElementById('nexusLoadRing')
+                if(ring) ring.style.animationPlayState = 'paused'
             })
+            if(window.NexusUI) NexusUI.refresh()
         }, 250)
         
     }, 750)
@@ -133,7 +139,10 @@ function showFatalStartupError(){
  * @param {Object} data The distro index object.
  */
 function onDistroRefresh(data){
-    updateSelectedServer(data.getServerById(ConfigManager.getSelectedServer()))
+    const serv = resolveNexusServer(data)
+    ConfigManager.setSelectedServer(serv.rawServer.id)
+    ConfigManager.save()
+    updateSelectedServer(serv)
     refreshServerStatus()
     initNews()
     syncModConfigurations(data)

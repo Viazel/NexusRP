@@ -1,24 +1,19 @@
+<!-- NexusRP — Écran de bienvenue (première ouverture) -->
 <div id="welcomeContainer" style="display: none;">
-    <!--<div class="cloudDiv">
-        <div class="cloudTop"></div>
-        <div class="cloudBottom"></div>
-    </div>-->
-    <div id="welcomeContent">
-        <img id="welcomeImageSeal" src="assets/images/SealCircle.png"/>
-        <span id="welcomeHeader"><%- lang('welcome.welcomeHeader') %></span>
-        <span id="welcomeDescription"><%- lang('welcome.welcomeDescription') %></span>
-        <br>
-        <span id="welcomeDescCTA"><%- lang('welcome.welcomeDescCTA') %></span>
-        <button id="welcomeButton">
-            <div id="welcomeButtonContent">
-                <%- lang('welcome.continueButton') %>
-                <svg id="welcomeSVG" viewBox="0 0 24.87 13.97">
-                    <defs>
-                        <style>.arrowLine{fill:none;stroke:#FFF;stroke-width:2px;transition: 0.25s ease;}</style>
-                    </defs>
-                    <polyline class="arrowLine" points="0.71 13.26 12.56 1.41 24.16 13.02"/>
-                </svg>
-            </div>
+    <div class="nexusAuthBackdrop"></div>
+    <div class="nexusAuthCard" id="welcomeContent">
+        <div class="nexusAuthBrand">
+            <img id="welcomeImageSeal" src="assets/images/nexusrp-logo.svg" alt="NexusRP"/>
+            <span class="nexusAuthBrandName">NexusRP</span>
+        </div>
+        <span id="welcomeHeader" class="nexusAuthTitle"><%- lang('welcome.welcomeHeader') %></span>
+        <span id="welcomeDescription" class="nexusAuthDesc"><%- lang('welcome.welcomeDescription') %></span>
+        <span id="welcomeDescCTA" class="nexusAuthCta"><%- lang('welcome.welcomeDescCTA') %></span>
+        <button id="welcomeButton" class="nexusAuthPrimaryBtn">
+            <%- lang('welcome.continueButton') %>
+            <svg class="nexusAuthBtnArrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
         </button>
     </div>
     <script src="./assets/js/scripts/welcome.js"></script>

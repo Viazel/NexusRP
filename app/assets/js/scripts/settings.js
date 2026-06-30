@@ -342,13 +342,16 @@ settingsNavDone.onclick = () => {
 const msftLoginLogger = LoggerUtil.getLogger('Microsoft Login')
 const msftLogoutLogger = LoggerUtil.getLogger('Microsoft Logout')
 
-// Bind the add mojang account button.
-document.getElementById('settingsAddMojangAccount').onclick = (e) => {
-    switchView(getCurrentView(), VIEWS.login, 500, 500, () => {
-        loginViewOnCancel = VIEWS.settings
-        loginViewOnSuccess = VIEWS.settings
-        loginCancelEnabled(true)
-    })
+// Mojang désactivé sur NexusRP — bouton absent de l'UI
+const settingsAddMojangBtn = document.getElementById('settingsAddMojangAccount')
+if(settingsAddMojangBtn) {
+    settingsAddMojangBtn.onclick = (e) => {
+        switchView(getCurrentView(), VIEWS.login, 500, 500, () => {
+            loginViewOnCancel = VIEWS.settings
+            loginViewOnSuccess = VIEWS.settings
+            loginCancelEnabled(true)
+        })
+    }
 }
 
 // Bind the add microsoft account button.
@@ -671,7 +674,9 @@ function populateAuthAccounts(){
     })
 
     settingsCurrentMicrosoftAccounts.innerHTML = microsoftAuthAccountStr
-    settingsCurrentMojangAccounts.innerHTML = mojangAuthAccountStr
+    if(settingsCurrentMojangAccounts) {
+        settingsCurrentMojangAccounts.innerHTML = mojangAuthAccountStr
+    }
 }
 
 /**

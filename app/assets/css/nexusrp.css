@@ -1,0 +1,1173 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   NexusRP Launcher — Thème UI (inspiré Paladium)
+   Surcharge les styles Helios pour le layout sidebar + onglets
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+    --nexus-bg: #070b14;
+    --nexus-surface: rgba(12, 18, 32, 0.72);
+    --nexus-glass: rgba(255, 255, 255, 0.04);
+    --nexus-glass-border: rgba(255, 255, 255, 0.08);
+    --nexus-accent: #00d4ff;
+    --nexus-accent-2: #7c3aed;
+    --nexus-accent-glow: rgba(0, 212, 255, 0.45);
+    --nexus-text: #e8edf5;
+    --nexus-text-muted: rgba(232, 237, 245, 0.55);
+    --nexus-radius: 14px;
+    --nexus-radius-sm: 10px;
+    --nexus-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --nexus-sidebar-w: 200px;
+}
+
+/* ── Reset landing Helios ─────────────────────────────────────────────────── */
+
+#landingContainer {
+    height: 100%;
+    overflow: hidden;
+    background: var(--nexus-bg);
+    position: relative;
+}
+
+#landingContainer > #upper,
+#landingContainer > #lower {
+    display: none !important;
+}
+
+#nexusCompatHidden {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#newsContainer {
+    display: none !important;
+}
+
+/* ── Shell layout ─────────────────────────────────────────────────────────── */
+
+#nexusShell {
+    display: flex;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+
+#nexusSidebar {
+    width: var(--nexus-sidebar-w);
+    min-width: var(--nexus-sidebar-w);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--nexus-surface);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-right: 1px solid var(--nexus-glass-border);
+    padding: 20px 12px 16px;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+#nexusSidebarBrand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 8px 24px;
+    border-bottom: 1px solid var(--nexus-glass-border);
+    margin-bottom: 16px;
+}
+
+#nexusLogo {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 16px var(--nexus-accent-glow);
+}
+
+#settingsAboutLogo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 20px var(--nexus-accent-glow);
+}
+
+#loginImageSeal {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 24px var(--nexus-accent-glow);
+    border: 2px solid rgba(0, 212, 255, 0.25);
+}
+
+#nexusBrandText {
+    display: flex;
+    flex-direction: column;
+}
+
+#nexusBrandName {
+    font-family: 'Avenir Medium', 'Segoe UI', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--nexus-text);
+    letter-spacing: 0.5px;
+}
+
+#nexusBrandTagline {
+    font-size: 10px;
+    color: var(--nexus-accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+/* Navigation items */
+#nexusNav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.nexusNavItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 14px;
+    border: none;
+    border-radius: var(--nexus-radius-sm);
+    background: transparent;
+    color: var(--nexus-text-muted);
+    font-family: 'Avenir Book', 'Segoe UI', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: var(--nexus-transition);
+    outline: none;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.nexusNavItem::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleY(0);
+    width: 3px;
+    height: 60%;
+    background: var(--nexus-accent);
+    border-radius: 0 3px 3px 0;
+    transition: transform var(--nexus-transition);
+}
+
+.nexusNavItem:hover {
+    background: var(--nexus-glass);
+    color: var(--nexus-text);
+    transform: scale(1.02);
+}
+
+.nexusNavItem.active {
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--nexus-accent);
+    box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.05);
+}
+
+.nexusNavItem.active::before {
+    transform: translateY(-50%) scaleY(1);
+}
+
+.nexusNavIcon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+#nexusSidebarFooter {
+    padding-top: 12px;
+    border-top: 1px solid var(--nexus-glass-border);
+}
+
+#nexusSocialLinks {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.nexusSocialLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    color: var(--nexus-text-muted);
+    transition: var(--nexus-transition);
+}
+
+.nexusSocialLink svg {
+    width: 18px;
+    height: 18px;
+}
+
+.nexusSocialLink:hover {
+    color: var(--nexus-accent);
+    background: var(--nexus-glass);
+    transform: scale(1.08);
+}
+
+/* ── Main content area ────────────────────────────────────────────────────── */
+
+#nexusMain {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.nexusTabPanel {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(12px);
+    transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
+    pointer-events: none;
+    overflow-y: auto;
+}
+
+.nexusTabPanel.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.nexusTabPanel.leaving {
+    opacity: 0;
+    transform: translateX(-12px);
+}
+
+/* ── Onglet Nouvelle Terre (Hero) ─────────────────────────────────────────── */
+
+#nexusTabHome {
+    overflow: hidden;
+}
+
+#nexusHeroBg {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(7, 11, 20, 0.55) 0%, rgba(7, 11, 20, 0.85) 60%, rgba(7, 11, 20, 0.95) 100%),
+        linear-gradient(160deg, #0d1b3e 0%, #1a0a2e 40%, #0a1628 100%);
+    background-size: cover;
+    background-position: center;
+    transition: transform 8s ease;
+}
+
+#nexusTabHome:hover #nexusHeroBg {
+    transform: scale(1.03);
+}
+
+#nexusHeroOverlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+#nexusHeroContent {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px 36px 28px;
+    box-sizing: border-box;
+}
+
+#nexusHeroTop {
+    animation: nexusFadeUp 0.6s ease both;
+}
+
+#nexusHeroBadge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(0, 212, 255, 0.12);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    color: var(--nexus-accent);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+#nexusHeroTitle {
+    font-family: 'Avenir Medium', 'Segoe UI', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--nexus-text);
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+    text-shadow: 0 0 40px rgba(0, 212, 255, 0.2);
+}
+
+#nexusHeroSubtitle {
+    font-size: 14px;
+    color: var(--nexus-text-muted);
+    margin: 0;
+    max-width: 400px;
+    line-height: 1.5;
+}
+
+#nexusHeroBottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    animation: nexusFadeUp 0.6s 0.15s ease both;
+    transition: opacity 0.35s ease, visibility 0.35s ease, transform 0.35s ease;
+}
+
+/* Masquer la carte serveur et le bouton pendant le téléchargement */
+#nexusTabHome.nexus-launching #nexusHeroBottom {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(12px);
+}
+
+#nexusTabHome.nexus-launching #nexusProgressBar {
+    opacity: 1 !important;
+}
+
+/* Glass cards */
+.nexusGlassCard {
+    background: var(--nexus-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--nexus-glass-border);
+    border-radius: var(--nexus-radius);
+    padding: 16px 20px;
+}
+
+/* Server status card */
+#nexusServerCard {
+    min-width: 200px;
+}
+
+#nexusServerStatusRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.nexusStatusDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+    animation: nexusPulse 2s ease infinite;
+    flex-shrink: 0;
+}
+
+.nexusStatusDot.offline {
+    background: #f87171;
+    box-shadow: 0 0 8px rgba(248, 113, 113, 0.6);
+    animation: none;
+}
+
+#landingPlayerLabel {
+    font-size: 11px;
+    color: var(--nexus-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nexusServerCount {
+    display: block;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--nexus-text);
+    font-family: 'Avenir Medium', sans-serif;
+}
+
+.nexusServerSelect {
+    display: none;
+}
+
+.nexusServerAddress {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--nexus-accent);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Launch button */
+#nexusLaunchZone {
+    flex-shrink: 0;
+}
+
+#launch_content {
+    display: inline-flex !important;
+}
+
+#launch_button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, var(--nexus-accent) 0%, var(--nexus-accent-2) 100%);
+    border: none;
+    border-radius: var(--nexus-radius);
+    color: #fff;
+    font-family: 'Avenir Medium', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    outline: none;
+    transition: var(--nexus-transition);
+    box-shadow: 0 4px 24px var(--nexus-accent-glow), 0 0 0 0 rgba(0, 212, 255, 0);
+    text-shadow: none;
+    position: relative;
+    overflow: hidden;
+}
+
+#launch_button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity var(--nexus-transition);
+}
+
+#launch_button:hover,
+#launch_button:focus {
+    transform: scale(1.02);
+    box-shadow: 0 6px 32px var(--nexus-accent-glow), 0 0 0 4px rgba(0, 212, 255, 0.15);
+    text-shadow: none;
+}
+
+#launch_button:hover::after {
+    opacity: 1;
+}
+
+#launch_button:active {
+    transform: scale(0.98);
+    color: #fff;
+}
+
+#launch_button:disabled {
+    opacity: 0.45;
+    cursor: default;
+    transform: none;
+    box-shadow: none;
+}
+
+.nexusLaunchArrow {
+    width: 20px;
+    height: 20px;
+    transition: transform var(--nexus-transition);
+}
+
+#launch_button:hover .nexusLaunchArrow {
+    transform: translateX(4px);
+}
+
+/* ── Onglet Profil ────────────────────────────────────────────────────────── */
+
+#nexusTabProfile,
+#nexusTabSettings {
+    padding: 28px 32px;
+    box-sizing: border-box;
+}
+
+.nexusTabHeader {
+    margin-bottom: 24px;
+    animation: nexusFadeUp 0.4s ease both;
+}
+
+.nexusTabTitle {
+    font-family: 'Avenir Medium', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--nexus-text);
+    margin: 0 0 4px;
+}
+
+.nexusTabDesc {
+    font-size: 13px;
+    color: var(--nexus-text-muted);
+    margin: 0;
+}
+
+#nexusProfileLayout {
+    display: flex;
+    gap: 20px;
+    animation: nexusFadeUp 0.4s 0.1s ease both;
+}
+
+#nexusProfileAvatarCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    min-width: 160px;
+    padding: 24px 20px;
+}
+
+#avatarContainer {
+    width: 100px;
+    height: 160px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    border-radius: var(--nexus-radius-sm);
+    background-color: rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+#avatarOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: var(--nexus-text);
+    font-size: 11px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity var(--nexus-transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#avatarContainer:hover #avatarOverlay {
+    opacity: 1;
+}
+
+.nexusProfileUsername {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--nexus-text);
+    text-align: center;
+}
+
+#nexusProfileInfoCard {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nexusProfileField {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--nexus-glass-border);
+}
+
+.nexusProfileField:last-child {
+    border-bottom: none;
+}
+
+.nexusProfileLabel {
+    font-size: 12px;
+    color: var(--nexus-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.nexusProfileValue {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--nexus-text);
+    font-family: 'Avenir Medium', sans-serif;
+}
+
+.nexusProfileGrade {
+    color: var(--nexus-accent);
+    padding: 3px 10px;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(0, 212, 255, 0.25);
+}
+
+.nexusPathValue {
+    font-size: 11px !important;
+    font-weight: 400 !important;
+    color: var(--nexus-text-muted) !important;
+    max-width: 280px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ── Onglet Paramètres ────────────────────────────────────────────────────── */
+
+#nexusSettingsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    animation: nexusFadeUp 0.4s 0.1s ease both;
+}
+
+.nexusSettingsCard {
+    padding: 20px;
+}
+
+.nexusSettingsCard:last-child {
+    grid-column: 1 / -1;
+}
+
+.nexusCardTitle {
+    font-family: 'Avenir Medium', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--nexus-text);
+    margin: 0 0 4px;
+}
+
+.nexusCardDesc {
+    font-size: 12px;
+    color: var(--nexus-text-muted);
+    margin: 0 0 14px;
+}
+
+/* RAM Slider */
+.nexusRamControl {
+    margin-top: 8px;
+}
+
+.nexusRamHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.nexusRamBadge {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--nexus-accent);
+    padding: 2px 10px;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.nexusRamSlider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+    cursor: pointer;
+}
+
+.nexusRamSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--nexus-accent), var(--nexus-accent-2));
+    box-shadow: 0 0 12px var(--nexus-accent-glow);
+    cursor: pointer;
+    transition: transform var(--nexus-transition);
+}
+
+.nexusRamSlider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+.nexusRamLabels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 10px;
+    color: var(--nexus-text-muted);
+}
+
+.nexusSecondaryBtn {
+    padding: 10px 18px;
+    background: var(--nexus-glass);
+    border: 1px solid var(--nexus-glass-border);
+    border-radius: var(--nexus-radius-sm);
+    color: var(--nexus-text);
+    font-size: 13px;
+    font-family: 'Avenir Book', sans-serif;
+    cursor: pointer;
+    transition: var(--nexus-transition);
+    outline: none;
+}
+
+.nexusSecondaryBtn:hover {
+    background: rgba(0, 212, 255, 0.1);
+    border-color: rgba(0, 212, 255, 0.3);
+    color: var(--nexus-accent);
+    transform: scale(1.02);
+}
+
+/* ── Barre de progression (bas) ───────────────────────────────────────────── */
+
+#nexusProgressBar {
+    position: absolute;
+    bottom: 0;
+    left: var(--nexus-sidebar-w);
+    right: 0;
+    z-index: 20;
+    padding: 0 24px 14px;
+    box-sizing: border-box;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#launch_details {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: var(--nexus-surface);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--nexus-glass-border);
+    border-radius: var(--nexus-radius-sm);
+    padding: 12px 16px;
+    top: auto !important;
+    position: relative;
+    animation: nexusSlideUp 0.35s ease both;
+}
+
+#launch_details_left {
+    display: flex;
+    align-items: center;
+}
+
+#launch_progress_label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--nexus-accent);
+    min-width: auto;
+    max-width: none;
+    text-align: left;
+    text-shadow: none;
+    letter-spacing: 0;
+}
+
+#launch_details_right {
+    flex: 1;
+}
+
+#nexusProgressTrack {
+    width: 100%;
+}
+
+#launch_progress[value] {
+    width: 100%;
+    height: 4px;
+    -webkit-appearance: none;
+    border-radius: 2px;
+}
+
+#launch_progress[value]::-webkit-progress-bar {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+}
+
+#launch_progress[value]::-webkit-progress-value {
+    background: linear-gradient(90deg, var(--nexus-accent), var(--nexus-accent-2));
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 8px var(--nexus-accent-glow);
+}
+
+.nexusProgressText {
+    font-size: 11px;
+    color: var(--nexus-text-muted);
+    margin-top: 4px;
+    display: block;
+}
+
+/* ── Animations ───────────────────────────────────────────────────────────── */
+
+@keyframes nexusFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes nexusSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes nexusPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ── Body / App overrides ─────────────────────────────────────────────────── */
+
+body[nexus-theme] {
+    background-color: var(--nexus-bg) !important;
+}
+
+body[nexus-theme] #main {
+    background: none !important;
+}
+
+body[nexus-theme] #frameBar {
+    background: rgba(7, 11, 20, 0.85) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--nexus-glass-border);
+}
+
+body[nexus-theme] #frameTitleText {
+    color: var(--nexus-text-muted);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+/* Serveur unique — boutons de changement de serveur désactivés */
+body[nexus-theme] .settingsSwitchServerContainer {
+    display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NexusRP — Écrans d'authentification (welcome, login, attente)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+#welcomeContainer,
+#loginOptionsContainer,
+#waitingContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: var(--nexus-bg) !important;
+    overflow: hidden;
+}
+
+.nexusAuthBackdrop {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 30% 20%, rgba(0, 212, 255, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+        linear-gradient(160deg, #0d1b3e 0%, #1a0a2e 40%, #070b14 100%);
+    pointer-events: none;
+}
+
+.nexusAuthCard {
+    position: relative;
+    z-index: 2;
+    width: min(420px, 88%);
+    padding: 36px 32px;
+    background: var(--nexus-glass);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--nexus-glass-border);
+    border-radius: var(--nexus-radius);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 212, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: nexusFadeUp 0.5s ease both;
+}
+
+.nexusAuthCardCompact {
+    padding: 40px 32px;
+}
+
+.nexusAuthBrand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#welcomeImageSeal,
+.nexusAuthLogo {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 24px var(--nexus-accent-glow);
+    border: 2px solid rgba(0, 212, 255, 0.25);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.nexusAuthBrandName {
+    font-family: 'Avenir Medium', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--nexus-accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.nexusAuthTitle,
+#welcomeHeader {
+    font-family: 'Avenir Medium', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--nexus-text) !important;
+    margin: 0 0 12px;
+    letter-spacing: 0.3px;
+    text-shadow: none !important;
+    text-align: center;
+    width: 100%;
+}
+
+.nexusAuthDesc,
+#welcomeDescription {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--nexus-text-muted) !important;
+    margin: 0 0 10px;
+    text-align: center;
+    text-shadow: none !important;
+    font-weight: 400;
+    width: 100%;
+}
+
+.nexusAuthCta,
+#welcomeDescCTA {
+    font-size: 12px;
+    color: var(--nexus-accent) !important;
+    margin: 0 0 24px;
+    text-shadow: none !important;
+    font-weight: 500;
+}
+
+#welcomeContent {
+    width: min(420px, 88%);
+    top: 0;
+    position: relative;
+}
+
+#loginOptionsContent {
+    top: 0;
+    border-radius: var(--nexus-radius);
+}
+
+.nexusAuthActions {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.nexusAuthPrimaryBtn,
+#welcomeButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, var(--nexus-accent) 0%, var(--nexus-accent-2) 100%) !important;
+    border: none !important;
+    border-radius: var(--nexus-radius-sm) !important;
+    color: #fff !important;
+    font-family: 'Avenir Medium', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    outline: none;
+    transition: var(--nexus-transition);
+    box-shadow: 0 4px 24px var(--nexus-accent-glow);
+    margin: 0;
+    right: auto;
+    position: relative;
+    text-shadow: none !important;
+}
+
+.nexusAuthPrimaryBtn:hover,
+#welcomeButton:hover,
+.nexusAuthPrimaryBtn:focus,
+#welcomeButton:focus {
+    transform: scale(1.02);
+    box-shadow: 0 6px 32px var(--nexus-accent-glow);
+    text-shadow: none !important;
+}
+
+.nexusAuthBtnArrow {
+    width: 18px;
+    height: 18px;
+    transition: transform var(--nexus-transition);
+}
+
+.nexusAuthPrimaryBtn:hover .nexusAuthBtnArrow,
+#welcomeButton:hover .nexusAuthBtnArrow {
+    transform: translateX(4px);
+}
+
+.nexusAuthMicrosoftBtn,
+#loginOptionMicrosoft {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    height: 52px;
+    padding: 0 20px;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid var(--nexus-glass-border) !important;
+    border-radius: var(--nexus-radius-sm) !important;
+    color: var(--nexus-text) !important;
+    font-family: 'Avenir Book', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: var(--nexus-transition);
+    text-shadow: none !important;
+}
+
+.nexusAuthMicrosoftBtn:hover,
+#loginOptionMicrosoft:hover,
+.nexusAuthMicrosoftBtn:focus,
+#loginOptionMicrosoft:focus {
+    background: rgba(0, 212, 255, 0.1) !important;
+    border-color: rgba(0, 212, 255, 0.35) !important;
+    color: var(--nexus-accent) !important;
+    transform: scale(1.02);
+    text-shadow: none !important;
+}
+
+.nexusAuthSecondaryBtn,
+#loginOptionCancelButton {
+    margin-top: 20px;
+    background: none !important;
+    border: none;
+    color: var(--nexus-text-muted) !important;
+    font-size: 13px;
+    cursor: pointer;
+    transition: var(--nexus-transition);
+    text-shadow: none !important;
+    position: relative;
+    bottom: auto;
+}
+
+.nexusAuthSecondaryBtn:hover,
+#loginOptionCancelButton:hover {
+    color: var(--nexus-text) !important;
+    text-shadow: none !important;
+}
+
+#loginOptionCancelContainer {
+    position: relative;
+    bottom: auto;
+    width: 100%;
+}
+
+#waitingContent {
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nexusWaitingSpinner {
+    width: 44px;
+    height: 44px;
+    border: 3px solid rgba(255, 255, 255, 0.08);
+    border-top-color: var(--nexus-accent);
+    border-radius: 50%;
+    animation: nexusSpin 0.8s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes nexusSpin {
+    to { transform: rotate(360deg); }
+}
+
+#waitingContainer .waitingSpinner {
+    display: none;
+}
+
+body[nexus-theme] #loadingContainer {
+    background: var(--nexus-bg);
+}
+
+/* Écran de chargement initial */
+.nexusLoadContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+}
+
+#loadCenterImage {
+    position: relative;
+    width: 72px !important;
+    height: 72px !important;
+    z-index: 2;
+    border-radius: 50%;
+}
+
+.nexusLoadRing {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.06);
+    border-top-color: var(--nexus-accent);
+    border-right-color: var(--nexus-accent-2);
+    animation: nexusSpin 1s linear infinite;
+    z-index: 1;
+}
+
+#loadSpinnerImage {
+    display: none;
+}
+
+#loadSpinnerContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+.nexusTabPanel::-webkit-scrollbar {
+    width: 4px;
+}
+.nexusTabPanel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+}

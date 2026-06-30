@@ -27,7 +27,7 @@ const {
     extractJdk
 }                             = require('helios-core/java')
 
-// Internal Requirements
+const { NEXUS_SERVER_HOST, NEXUS_SERVER_PORT } = require('./assets/js/distromanager')
 const DiscordWrapper          = require('./assets/js/discordwrapper')
 const ProcessBuilder          = require('./assets/js/processbuilder')
 
@@ -37,7 +37,6 @@ const launch_details          = document.getElementById('launch_details')
 const launch_progress         = document.getElementById('launch_progress')
 const launch_progress_label   = document.getElementById('launch_progress_label')
 const launch_details_text     = document.getElementById('launch_details_text')
-const server_selection_button = document.getElementById('server_selection_button')
 const user_text               = document.getElementById('user_text')
 
 const loggerLanding = LoggerUtil.getLogger('Landing')
@@ -50,12 +49,18 @@ const loggerLanding = LoggerUtil.getLogger('Landing')
  * @param {boolean} loading True if the loading area should be shown, otherwise false.
  */
 function toggleLaunchArea(loading){
+    const progressBar = document.getElementById('nexusProgressBar')
+    const homeTab = document.getElementById('nexusTabHome')
     if(loading){
         launch_details.style.display = 'flex'
         launch_content.style.display = 'none'
+        if(progressBar) progressBar.style.opacity = '1'
+        if(homeTab) homeTab.classList.add('nexus-launching')
     } else {
         launch_details.style.display = 'none'
         launch_content.style.display = 'inline-flex'
+        if(progressBar) progressBar.style.opacity = '0'
+        if(homeTab) homeTab.classList.remove('nexus-launching')
     }
 }
 
@@ -127,18 +132,29 @@ document.getElementById('launch_button').addEventListener('click', async e => {
     }
 })
 
-// Bind settings button
-document.getElementById('settingsMediaButton').onclick = async e => {
-    await prepareSettings()
-    switchView(getCurrentView(), VIEWS.settings)
+// Bind settings button (NexusRP : bascule vers l'onglet Paramètres)
+const settingsMediaBtn = document.getElementById('settingsMediaButton')
+if(settingsMediaBtn) {
+    settingsMediaBtn.onclick = async e => {
+        if(window.NexusUI) {
+            NexusUI.switchTab('settings')
+        } else {
+            await prepareSettings()
+            switchView(getCurrentView(), VIEWS.settings)
+        }
+    }
 }
 
-// Bind avatar overlay button.
+// Bind avatar overlay button (NexusRP : bascule vers l'onglet Profil)
 document.getElementById('avatarOverlay').onclick = async e => {
-    await prepareSettings()
-    switchView(getCurrentView(), VIEWS.settings, 500, 500, () => {
-        settingsNavItemListener(document.getElementById('settingsNavAccount'), false)
-    })
+    if(window.NexusUI) {
+        NexusUI.switchTab('profile')
+    } else {
+        await prepareSettings()
+        switchView(getCurrentView(), VIEWS.settings, 500, 500, () => {
+            settingsNavItemListener(document.getElementById('settingsNavAccount'), false)
+        })
+    }
 }
 
 // Bind selected account
@@ -150,30 +166,27 @@ function updateSelectedAccount(authUser){
         }
         if(authUser.uuid != null){
             document.getElementById('avatarContainer').style.backgroundImage = `url('https://mc-heads.net/body/${authUser.uuid}/right')`
+            // Charger les données RP mock (remplacer par votre API)
+            if(window.NexusProfileData) {
+                NexusProfileData.loadFromAPI(authUser.uuid)
+            }
         }
     }
     user_text.innerHTML = username
 }
 updateSelectedAccount(ConfigManager.getSelectedAccount())
 
-// Bind selected server
+// Bind selected server (serveur unique — pas de sélection utilisateur)
 function updateSelectedServer(serv){
     if(getCurrentView() === VIEWS.settings){
         fullSettingsSave()
     }
     ConfigManager.setSelectedServer(serv != null ? serv.rawServer.id : null)
     ConfigManager.save()
-    server_selection_button.innerHTML = '&#8226; ' + (serv != null ? serv.rawServer.name : Lang.queryJS('landing.noSelection'))
     if(getCurrentView() === VIEWS.settings){
         animateSettingsTabRefresh()
     }
     setLaunchEnabled(serv != null)
-}
-// Real text is set in uibinder.js on distributionIndexDone.
-server_selection_button.innerHTML = '&#8226; ' + Lang.queryJS('landing.selectedServer.loading')
-server_selection_button.onclick = async e => {
-    e.target.blur()
-    await toggleServerSelection(true)
 }
 
 // Update Mojang Status Color
@@ -237,21 +250,26 @@ const refreshMojangStatuses = async function(){
 
 const refreshServerStatus = async (fade = false) => {
     loggerLanding.info('Refreshing Server Status')
-    const serv = (await DistroAPI.getDistribution()).getServerById(ConfigManager.getSelectedServer())
 
     let pLabel = Lang.queryJS('landing.serverStatus.server')
     let pVal = Lang.queryJS('landing.serverStatus.offline')
+    let isOnline = false
 
     try {
 
-        const servStat = await getServerStatus(47, serv.hostname, serv.port)
+        const servStat = await getServerStatus(47, NEXUS_SERVER_HOST, NEXUS_SERVER_PORT)
         console.log(servStat)
         pLabel = Lang.queryJS('landing.serverStatus.players')
         pVal = servStat.players.online + '/' + servStat.players.max
+        isOnline = true
 
     } catch (err) {
         loggerLanding.warn('Unable to refresh server status, assuming offline.')
         loggerLanding.debug(err)
+    }
+
+    if(window.NexusUI) {
+        NexusUI.updateServerDot(isOnline)
     }
     if(fade){
         $('#server_status_wrapper').fadeOut(250, () => {

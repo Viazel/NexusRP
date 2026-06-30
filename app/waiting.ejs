@@ -1,8 +1,9 @@
+<!-- NexusRP — Attente OAuth Microsoft -->
 <div id="waitingContainer" style="display: none;">
-    <div id="waitingContent">
-        <div class="waitingSpinner"></div>
-        <div id="waitingTextContainer">
-            <h2><%- lang('waiting.waitingText') %></h2>
-        </div>
+    <div class="nexusAuthBackdrop"></div>
+    <div class="nexusAuthCard nexusAuthCardCompact" id="waitingContent">
+        <div class="nexusWaitingSpinner"></div>
+        <h2 class="nexusAuthTitle" id="waitingText"><%- lang('waiting.waitingText') %></h2>
+        <p class="nexusAuthDesc"><%- lang('waiting.waitingHint') %></p>
     </div>
 </div>
