@@ -12,6 +12,8 @@ const { DistroAPI, resolveNexusServer } = require('./assets/js/distromanager')
 
 let rscShouldLoad = false
 let fatalStartupError = false
+let mainUIShown = false
+let autoUpdaterInitialized = false
 
 // Mapping of each view to their container IDs.
 const VIEWS = {
@@ -58,66 +60,74 @@ function getCurrentView(){
 }
 
 async function showMainUI(data){
+    if(mainUIShown){
+        return
+    }
+    mainUIShown = true
 
-    if(!isDev){
+    if(!isDev && !autoUpdaterInitialized){
+        autoUpdaterInitialized = true
         loggerAutoUpdater.info('Initializing..')
         ipcRenderer.send('autoUpdateAction', 'initAutoUpdater', ConfigManager.getAllowPrerelease())
     }
 
-    await prepareSettings(true)
-    const distro = await DistroAPI.getDistribution()
+    prepareSettings(true, { deferHeavy: true }).catch(err => {
+        console.error('Settings preparation failed during startup.', err)
+    })
+
+    const distro = data || await DistroAPI.getDistribution()
     const serv = resolveNexusServer(distro)
     ConfigManager.setSelectedServer(serv.rawServer.id)
     ConfigManager.save()
     updateSelectedServer(serv)
     refreshServerStatus()
-    setTimeout(() => {
-        document.getElementById('frameBar').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-        document.body.style.backgroundImage = `url('assets/images/backgrounds/${document.body.getAttribute('bkid')}.jpg')`
-        $('#main').show()
 
-        const isLoggedIn = Object.keys(ConfigManager.getAuthAccounts()).length > 0
+    document.getElementById('frameBar').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+    document.body.style.backgroundImage = `url('assets/images/backgrounds/${document.body.getAttribute('bkid')}.jpg')`
+    $('#main').show()
 
-        // If this is enabled in a development environment we'll get ratelimited.
-        // The relaunch frequency is usually far too high.
-        if(!isDev && isLoggedIn){
-            validateSelectedAccount()
-        }
+    const isLoggedIn = Object.keys(ConfigManager.getAuthAccounts()).length > 0
+    const fadeMs = 350
 
-        if(ConfigManager.isFirstLaunch()){
-            currentView = VIEWS.welcome
-            $(VIEWS.welcome).fadeIn(1000)
+    // If this is enabled in a development environment we'll get ratelimited.
+    // The relaunch frequency is usually far too high.
+    if(!isDev && isLoggedIn){
+        validateSelectedAccount()
+    }
+
+    if(ConfigManager.isFirstLaunch()){
+        currentView = VIEWS.welcome
+        $(VIEWS.welcome).fadeIn(fadeMs)
+    } else {
+        if(isLoggedIn){
+            currentView = VIEWS.landing
+            $(VIEWS.landing).fadeIn(fadeMs)
         } else {
-            if(isLoggedIn){
-                currentView = VIEWS.landing
-                $(VIEWS.landing).fadeIn(1000)
-            } else {
-                loginOptionsCancelEnabled(false)
-                loginOptionsViewOnLoginSuccess = VIEWS.landing
-                loginOptionsViewOnLoginCancel = VIEWS.loginOptions
-                currentView = VIEWS.loginOptions
-                $(VIEWS.loginOptions).fadeIn(1000)
-            }
+            loginOptionsCancelEnabled(false)
+            loginOptionsViewOnLoginSuccess = VIEWS.landing
+            loginOptionsViewOnLoginCancel = VIEWS.loginOptions
+            currentView = VIEWS.loginOptions
+            $(VIEWS.loginOptions).fadeIn(fadeMs)
         }
+    }
 
-        setTimeout(() => {
-            $('#loadingContainer').fadeOut(500, () => {
-                const ring = document.getElementById('nexusLoadRing')
-                if(ring) ring.style.animationPlayState = 'paused'
-            })
-            if(window.NexusUI) NexusUI.refresh()
-        }, 250)
-        
-    }, 750)
-    // Disable tabbing to the news container.
+    $('#loadingContainer').fadeOut(300, () => {
+        const ring = document.getElementById('nexusLoadRing')
+        if(ring) ring.style.animationPlayState = 'paused'
+    })
+    if(window.NexusUI) NexusUI.refresh()
+
+    if(typeof scheduleDeferredLandingTasks === 'function'){
+        scheduleDeferredLandingTasks()
+    }
+
     initNews().then(() => {
         $('#newsContainer *').attr('tabindex', '-1')
     })
 }
 
 function showFatalStartupError(){
-    setTimeout(() => {
-        $('#loadingContainer').fadeOut(250, () => {
+    $('#loadingContainer').fadeOut(250, () => {
             document.getElementById('overlayContainer').style.background = 'none'
             setOverlayContent(
                 Lang.queryJS('uibinder.startup.fatalErrorTitle'),
@@ -130,7 +140,6 @@ function showFatalStartupError(){
             })
             toggleOverlay(true)
         })
-    }, 750)
 }
 
 /**

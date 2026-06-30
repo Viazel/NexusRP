@@ -100,11 +100,20 @@ function setDownloadPercentage(percent){
  * @param {boolean} val True to enable, false to disable.
  */
 function setLaunchEnabled(val){
-    document.getElementById('launch_button').disabled = !val
+    if(window.LauncherUpdate){
+        LauncherUpdate.setServerLaunchAllowed(val)
+    } else {
+        document.getElementById('launch_button').disabled = !val
+    }
 }
 
 // Bind launch button
 document.getElementById('launch_button').addEventListener('click', async e => {
+    if(window.LauncherUpdate && LauncherUpdate.isLaunchBlocked()){
+        LauncherUpdate.openUpdateFlow()
+        return
+    }
+
     loggerLanding.info('Launching game..')
     try {
         const server = (await DistroAPI.getDistribution()).getServerById(ConfigManager.getSelectedServer())
@@ -284,7 +293,10 @@ const refreshServerStatus = async (fade = false) => {
     
 }
 
-refreshMojangStatuses()
+function scheduleDeferredLandingTasks(){
+    refreshMojangStatuses()
+}
+
 // Server Status is refreshed in uibinder.js on distributionIndexDone.
 
 // Refresh statuses every hour. The status page itself refreshes every day so...
@@ -464,6 +476,11 @@ const GAME_LAUNCH_REGEX = /^\[.+\]: (?:MinecraftForge .+ Initialized|ModLauncher
 const MIN_LINGER = 5000
 
 async function dlAsync(login = true) {
+
+    if(window.LauncherUpdate && LauncherUpdate.isLaunchBlocked()){
+        LauncherUpdate.openUpdateFlow()
+        return
+    }
 
     // Login parameter is temporary for debug purposes. Allows testing the validation/downloads without
     // launching the game.
