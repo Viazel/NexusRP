@@ -1,6 +1,10 @@
 {
   "name": "nexusrp",
+<<<<<<< HEAD
   "version": "1.0.0",
+=======
+  "version": "1.0.1",
+>>>>>>> cc9a10b (fix(CD): don't push everything)
   "productName": "NexusRP",
   "description": "Modded Minecraft Launcher",
   "author": "Viazel",
