@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NexusRP — Serveur Minecraft Roleplay. Téléchargez le launcher officiel et rejoignez Nouvelle Terre.">
+    <meta name="theme-color" content="#070b14">
+    <title>NexusRP — Nouvelle Terre</title>
+    <link rel="icon" type="image/svg+xml" href="assets/nexusrp-logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <header class="header">
+        <a href="#" class="logo">
+            <img src="assets/nexusrp-logo.svg" alt="NexusRP" width="36" height="36">
+            <span>NexusRP</span>
+        </a>
+        <nav class="nav">
+            <a href="#nouvelle-terre">Nouvelle Terre</a>
+            <a href="#launcher">Launcher</a>
+            <a href="#telecharger">Télécharger</a>
+        </nav>
+        <a href="#telecharger" class="btn btn-sm btn-primary header-cta">Jouer</a>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-badge">Serveur Roleplay Minecraft</div>
+            <h1 class="hero-title">
+                Bienvenue sur<br>
+                <span class="gradient-text">Nouvelle Terre</span>
+            </h1>
+            <p class="hero-subtitle">
+                Forgez votre destin dans un univers roleplay immersif.
+                Le launcher NexusRP vous connecte en un clic à l'aventure.
+            </p>
+
+            <div class="hero-download" id="heroDownload">
+                <a href="#" class="btn btn-primary btn-lg download-main" id="downloadMain" data-state="loading">
+                    <span class="btn-icon" id="downloadIcon">⬇</span>
+                    <span class="btn-text">
+                        <span class="btn-label" id="downloadLabel">Chargement…</span>
+                        <span class="btn-sublabel" id="downloadSublabel">Recherche de la dernière version</span>
+                    </span>
+                </a>
+                <p class="hero-version" id="heroVersion"></p>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-value">RP</span>
+                    <span class="stat-label">Roleplay immersif</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">1 clic</span>
+                    <span class="stat-label">Connexion rapide</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">Auto</span>
+                    <span class="stat-label">Mods & mises à jour</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nouvelle Terre -->
+        <section class="section" id="nouvelle-terre">
+            <div class="section-header">
+                <span class="section-tag">L'univers</span>
+                <h2>Nouvelle Terre</h2>
+                <p>Un monde rebâti après l'effondrement, où chaque joueur écrit sa propre histoire.</p>
+            </div>
+
+            <div class="cards-grid">
+                <article class="card glass">
+                    <div class="card-icon">🏙️</div>
+                    <h3>Vie urbaine</h3>
+                    <p>Travaillez, commercez et évoluez dans une société reconstruite. Chaque métier compte dans l'économie du serveur.</p>
+                </article>
+                <article class="card glass">
+                    <div class="card-icon">⚔️</div>
+                    <h3>Conflits & alliances</h3>
+                    <p>Formez des factions, négociez des traités ou affrontez vos rivaux. Le politique est aussi dangereux que le combat.</p>
+                </article>
+                <article class="card glass">
+                    <div class="card-icon">📜</div>
+                    <h3>Histoire vivante</h3>
+                    <p>Vos actions laissent une trace. Les événements communautaires façonnent le destin de Nouvelle Terre.</p>
+                </article>
+            </div>
+
+            <div class="server-card glass">
+                <div class="server-card-left">
+                    <span class="server-dot"></span>
+                    <div>
+                        <span class="server-label">Serveur principal</span>
+                        <span class="server-host">nouvelle-terre.fr</span>
+                    </div>
+                </div>
+                <a href="#telecharger" class="btn btn-secondary">Rejoindre le serveur</a>
+            </div>
+        </section>
+
+        <!-- Launcher -->
+        <section class="section section-alt" id="launcher">
+            <div class="section-header">
+                <span class="section-tag">Le launcher</span>
+                <h2>Tout est géré pour vous</h2>
+                <p>Plus besoin d'installer les mods manuellement. NexusRP s'occupe de tout.</p>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-num">01</div>
+                    <div class="feature-content">
+                        <h3>Connexion Microsoft</h3>
+                        <p>Connectez-vous avec votre compte Microsoft officiel Minecraft. Simple, sécurisé, en quelques secondes.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-num">02</div>
+                    <div class="feature-content">
+                        <h3>Installation automatique</h3>
+                        <p>Mods, version Minecraft et fichiers du serveur — tout se télécharge et se met à jour automatiquement.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-num">03</div>
+                    <div class="feature-content">
+                        <h3>Profil & paramètres</h3>
+                        <p>Consultez votre profil RP, ajustez la RAM allouée et gérez votre compte depuis une interface moderne.</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-num">04</div>
+                    <div class="feature-content">
+                        <h3>Un clic pour jouer</h3>
+                        <p>Appuyez sur « Se connecter à Nouvelle Terre » et le launcher lance le jeu directement sur le serveur.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download -->
+        <section class="section" id="telecharger">
+            <div class="section-header">
+                <span class="section-tag">Téléchargement</span>
+                <h2>Installez le launcher</h2>
+                <p>Choisissez votre plateforme ou laissez-nous détecter la vôtre automatiquement.</p>
+            </div>
+
+            <div class="download-grid" id="downloadGrid">
+                <div class="download-card glass" data-os="windows">
+                    <div class="download-card-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449 9.75 2.1v9.451H0zm10.949 0 9.75-1.349v9.451h-9.75zM0 12.549h9.75v9.451L0 20.651zm10.949 0h9.75v9.451l-9.75-1.349z"/></svg>
+                    </div>
+                    <h3>Windows</h3>
+                    <p>Windows 10 / 11 (64-bit)</p>
+                    <a href="#" class="btn btn-outline download-btn" data-os="windows">Télécharger .exe</a>
+                </div>
+
+                <div class="download-card glass" data-os="mac-x64">
+                    <div class="download-card-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    </div>
+                    <h3>macOS Intel</h3>
+                    <p>Mac avec processeur Intel</p>
+                    <a href="#" class="btn btn-outline download-btn" data-os="mac-x64">Télécharger .dmg</a>
+                </div>
+
+                <div class="download-card glass" data-os="mac-arm64">
+                    <div class="download-card-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    </div>
+                    <h3>macOS Apple Silicon</h3>
+                    <p>Mac M1 / M2 / M3 / M4</p>
+                    <a href="#" class="btn btn-outline download-btn" data-os="mac-arm64">Télécharger .dmg</a>
+                </div>
+
+                <div class="download-card glass" data-os="linux">
+                    <div class="download-card-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 0 0-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.404.131.863.264 1.049.73.095.291.095.611 0 .9-.19.594-.55 1.018-1.066 1.344-.516.326-1.114.563-1.66.844-.748.378-1.45.897-1.676 1.68-.088.312-.104.653-.033.983.071.33.224.63.447.865.588.631 1.612.877 2.491.631.44-.132.828-.4 1.241-.631.414-.231.863-.432 1.344-.432.482 0 .93.201 1.344.432.413.231.801.499 1.241.631.879.246 1.903 0 2.491-.631.223-.235.376-.535.447-.865.071-.33.055-.671-.033-.983-.226-.783-.928-1.302-1.676-1.68-.546-.281-1.144-.518-1.66-.844-.516-.326-.876-.75-1.066-1.344a1.39 1.39 0 0 1 0-.9c.186-.466.645-.599 1.049-.73.405-.131.766-.267.94-.601.174-.339.143-.804-.106-1.484-.076-.242-.018-.571.04-.97.028-.136.055-.337.055-.536a1.28 1.28 0 0 0-.132-.602 1.06 1.06 0 0 0-.864-.68 2.422 2.422 0 0 0-.797-.4 2.707 2.707 0 0 1-.663-.839.441.441 0 0 0-.11-.135c.123-.805-.009-1.657-.287-2.489-.589-1.771-1.831-3.47-2.716-4.521-.75-1.067-.974-1.928-1.05-3.02-.065-1.491 1.056-5.965-3.17-6.298C12.819.008 12.659 0 12.504 0z"/></svg>
+                    </div>
+                    <h3>Linux</h3>
+                    <p>AppImage universel</p>
+                    <a href="#" class="btn btn-outline download-btn" data-os="linux">Télécharger .AppImage</a>
+                </div>
+            </div>
+
+            <p class="download-fallback">
+                Vous pouvez aussi consulter toutes les versions sur
+                <a href="https://github.com/Viazel/NexusRP/releases" target="_blank" rel="noopener">GitHub Releases</a>.
+            </p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <a href="#" class="logo">
+                <img src="assets/nexusrp-logo.svg" alt="NexusRP" width="28" height="28">
+                <span>NexusRP</span>
+            </a>
+            <p class="footer-copy">NexusRP — Serveur Minecraft Roleplay. Non affilié à Mojang AB.</p>
+            <div class="footer-links">
+                <a href="https://github.com/Viazel/NexusRP" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://github.com/Viazel/NexusRP/releases" target="_blank" rel="noopener">Releases</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/download.js"></script>
+</body>
+</html>
